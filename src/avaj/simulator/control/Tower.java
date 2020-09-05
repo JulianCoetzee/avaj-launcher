@@ -31,7 +31,7 @@ public class Tower {
         i = 0;
         while (i < registered.size())
         {
-            registered.get(i).updateWeather();
+            registered.get(i).weatherUpdate();
         }
     }
 }
