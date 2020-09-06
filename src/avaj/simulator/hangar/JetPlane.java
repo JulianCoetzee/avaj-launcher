@@ -18,6 +18,8 @@ public class JetPlane extends Aircraft implements Airborn {
     {
         this.tower = tower;
         this.tower.registerAC(this);
+        Simulator.output.println("Tower: JetPlane#" + this.callsign + "(" + this.id +"): " + "registered to tower");
+
     }
 
     public void weatherUpdate()
@@ -48,5 +50,11 @@ public class JetPlane extends Aircraft implements Airborn {
         }
 
         Simulator.output.println("JetPlane#" + this.callsign + "(" + this.id +"): " + radioLog.get(weather));
+        if (this.coords.getH() <= 0)
+        {
+            Simulator.output.println("JetPlane#" + this.callsign + "(" + this.id +"): " + "landing safely.");
+            this.tower.unregisterAC(this);
+            Simulator.output.println("Tower: JetPlane#" + this.callsign + "(" + this.id +"): " + "deregistered from tower");
+        }
     }
 }

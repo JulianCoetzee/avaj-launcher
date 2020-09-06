@@ -24,7 +24,7 @@ public class Tower {
         return WeatherForecast.getForecast().getWeather(coords);
     }
 
-    protected void weatherChange()
+    public void weatherChange()
     {
         int i;
 
@@ -32,6 +32,7 @@ public class Tower {
         while (i < registered.size())
         {
             registered.get(i).weatherUpdate();
+            i++;
         }
     }
 }

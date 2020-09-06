@@ -18,6 +18,8 @@ public class Baloon extends Aircraft implements Airborn {
     {
         this.tower = tower;
         this.tower.registerAC(this);
+        Simulator.output.println("Tower: Baloon#" + this.callsign + "(" + this.id +"): " + "registered to tower");
+
     }
 
     public void weatherUpdate()
@@ -26,7 +28,7 @@ public class Baloon extends Aircraft implements Airborn {
         HashMap<String, String> radioLog = new HashMap<String, String>() {{
             put("FOG", "Who turned off the sun?");
             put("RAIN", "Wish I had a cabin :(");
-            put("SNOW", "More fire puhlease");
+            put("SNOW", "More fire puhleeze!");
             put("SUN", "Get my sunglasses");
         }};
 
@@ -48,5 +50,11 @@ public class Baloon extends Aircraft implements Airborn {
         }
         
         Simulator.output.println("Baloon#" + this.callsign + "(" + this.id +"): " + radioLog.get(weather));
+        if (this.coords.getH() <= 0)
+        {
+            Simulator.output.println("Baloon#" + this.callsign + "(" + this.id +"): " + "landing safely.");
+            this.tower.unregisterAC(this);
+            Simulator.output.println("Tower: Baloon#" + this.callsign + "(" + this.id +"): " + "deregistered from tower");
+        }
     }
 }

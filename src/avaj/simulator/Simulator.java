@@ -1,7 +1,9 @@
 package src.avaj.simulator;
 
 import java.io.*;
-// import java.util.*;
+
+import src.avaj.simulator.control.*;
+import src.avaj.simulator.hangar.*;
 
 public class Simulator {
 
@@ -9,9 +11,6 @@ public class Simulator {
     public static int wc; // weather cycles
 public static void main(String[] args)
 { 
-// We need to provide file path as the parameter: 
-// double backquote is to avoid compiler interpret words 
-// like \test as \t (ie. as a escape sequence) 
     File simFile = new File("./simulation.txt"); 
 
     if (args.length < 1)
@@ -27,6 +26,9 @@ public static void main(String[] args)
         }
         if (simFile.exists() && !simFile.isDirectory())
             output.print("");
+
+        Hangar hangar = new Hangar();
+        Tower tower = new Tower();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(scenarioName)); //read file
@@ -60,9 +62,21 @@ public static void main(String[] args)
                     {
                         throw new Exception("Aircraft format error: Scenario line " + i + ". Requires 5 parameters.");
                     }
-
+                    // Register Aircraft
+                    try {
+                        hangar.Flight(
+                            split[0],
+                            split[1],
+                            Integer.parseInt(split[2]),
+                            Integer.parseInt(split[3]),
+                            Integer.parseInt(split[4])
+                            ).registerToTower(tower);
+                    } catch (NumberFormatException nfe) {
+                        System.out.println("Error: Invalid coordinate parameters (non-integers)");
+                    } catch (Exception err) {
+                        System.out.println("Error: " + err.getMessage());
+                    }
                 }
-                System.out.println(str);
                 i++;
             }
             br.close();
@@ -70,6 +84,14 @@ public static void main(String[] args)
             System.out.println("Error: Scenario file not found");
         } catch (Exception err) {
             System.out.println("Error: " + err.getMessage());
+            return ;
         }
+        // Run sim by changing weather
+        while (wc > 0)
+        {
+            tower.weatherChange();
+            wc--;
+        }
+        output.close();
     } 
 }
