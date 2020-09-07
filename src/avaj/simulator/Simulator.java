@@ -4,6 +4,7 @@ import java.io.*;
 
 import src.avaj.simulator.control.*;
 import src.avaj.simulator.hangar.*;
+// import src.avaj.simulator.weather.WeatherForecast;
 
 public class Simulator {
 
@@ -29,15 +30,14 @@ public static void main(String[] args)
 
         Hangar hangar = new Hangar();
         Tower tower = new Tower();
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(scenarioName)); //read file
+//read file
+        try (BufferedReader buffRead = new BufferedReader(new FileReader(scenarioName))) {
             String str;
             int i;
             String[] split;
 
             i = 1;
-            while ((str = br.readLine()) != null)
+            while ((str = buffRead.readLine()) != null)
             {
                 if (i == 1) //analyse first line of scenario file
                 {
@@ -55,6 +55,7 @@ public static void main(String[] args)
                 }
                 else
                 {
+                    // System.out.println(i + " " + str);
                     split = str.split(" ");
                     if (split.length == 1 && split[0].isEmpty()) //ignore empty lines
                         continue ;
@@ -64,7 +65,7 @@ public static void main(String[] args)
                     }
                     // Register Aircraft
                     try {
-                        hangar.Flight(
+                        hangar.flight(
                             split[0],
                             split[1],
                             Integer.parseInt(split[2]),
@@ -73,20 +74,22 @@ public static void main(String[] args)
                             ).registerToTower(tower);
                     } catch (NumberFormatException nfe) {
                         System.out.println("Error: Invalid coordinate parameters (non-integers)");
+                        return ;
                     } catch (Exception err) {
+                        // System.out.println(i + " Error: " + err.getMessage());
                         System.out.println("Error: " + err.getMessage());
+                        return ;
                     }
                 }
                 i++;
             }
-            br.close();
-        } catch (FileNotFoundException sfnf) {
-            System.out.println("Error: Scenario file not found");
+            buffRead.close();
         } catch (Exception err) {
             System.out.println("Error: " + err.getMessage());
             return ;
         }
         // Run sim by changing weather
+        // WeatherForecast forecast = WeatherForecast.getForecast();
         while (wc > 0)
         {
             tower.weatherChange();

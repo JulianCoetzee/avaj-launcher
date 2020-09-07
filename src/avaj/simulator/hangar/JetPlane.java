@@ -1,6 +1,6 @@
 package src.avaj.simulator.hangar;
 
-import java.util.*;
+import java.util.HashMap;
 
 import src.avaj.simulator.Simulator;
 import src.avaj.simulator.control.*;
@@ -19,7 +19,6 @@ public class JetPlane extends Aircraft implements Airborn {
         this.tower = tower;
         this.tower.registerAC(this);
         Simulator.output.println("Tower: JetPlane#" + this.callsign + "(" + this.id +"): " + "registered to tower");
-
     }
 
     public void weatherUpdate()
@@ -28,8 +27,8 @@ public class JetPlane extends Aircraft implements Airborn {
         HashMap<String, String> radioLog = new HashMap<String, String>() {{
             put("FOG", "This shouldn't be possible at cruising altitude");
             put("RAIN", "Watch the chop");
-            put("SNOW", "Can't see nothing, Cpt, Snow");
-            put("SUN", "Aviators gents");
+            put("SNOW", "Can't see nothing, Cpt. Snow");
+            put("SUN", "Aviators, gents");
         }};
 
         if (weather == "FOG")

@@ -1,6 +1,6 @@
 package src.avaj.simulator.hangar;
 
-import java.util.*;
+import java.util.HashMap;
 
 import src.avaj.simulator.Simulator;
 import src.avaj.simulator.control.*;
@@ -19,7 +19,6 @@ public class Baloon extends Aircraft implements Airborn {
         this.tower = tower;
         this.tower.registerAC(this);
         Simulator.output.println("Tower: Baloon#" + this.callsign + "(" + this.id +"): " + "registered to tower");
-
     }
 
     public void weatherUpdate()
