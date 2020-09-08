@@ -55,7 +55,7 @@ public static void main(String[] args)
                 }
                 else
                 {
-                    System.out.println(i + " " + str);
+                    // System.out.println(i + " " + str);
                     split = str.split(" ");
                     if (split.length == 1 && split[0].isEmpty()) //ignore empty lines
                         continue ;
