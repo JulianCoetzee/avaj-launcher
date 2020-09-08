@@ -2,9 +2,9 @@ package src.avaj.simulator;
 
 import java.io.*;
 
-import src.avaj.simulator.control.*;
 import src.avaj.simulator.hangar.*;
 // import src.avaj.simulator.weather.WeatherForecast;
+import src.avaj.simulator.weather.WeatherTower;
 
 public class Simulator {
 
@@ -29,7 +29,7 @@ public static void main(String[] args)
             output.print("");
 
         Hangar hangar = new Hangar();
-        Tower tower = new Tower();
+        WeatherTower weatherTower = new WeatherTower();
 //read file
         try (BufferedReader buffRead = new BufferedReader(new FileReader(scenarioName))) {
             String str;
@@ -55,7 +55,7 @@ public static void main(String[] args)
                 }
                 else
                 {
-                    // System.out.println(i + " " + str);
+                    System.out.println(i + " " + str);
                     split = str.split(" ");
                     if (split.length == 1 && split[0].isEmpty()) //ignore empty lines
                         continue ;
@@ -65,13 +65,12 @@ public static void main(String[] args)
                     }
                     // Register Aircraft
                     try {
-                        hangar.flight(
+                            hangar.flight(
                             split[0],
                             split[1],
                             Integer.parseInt(split[2]),
                             Integer.parseInt(split[3]),
-                            Integer.parseInt(split[4])
-                            ).registerToTower(tower);
+                            Integer.parseInt(split[4])).registerToTower(weatherTower);
                     } catch (NumberFormatException nfe) {
                         System.out.println("Error: Invalid coordinate parameters (non-integers)");
                         return ;
@@ -92,7 +91,7 @@ public static void main(String[] args)
         // WeatherForecast forecast = WeatherForecast.getForecast();
         while (wc > 0)
         {
-            tower.weatherChange();
+            weatherTower.weatherChange();
             wc--;
         }
         output.close();

@@ -7,19 +7,22 @@ public class Hangar {
     public Airborn flight(String type, String callsign, int longi, int lati, int h)
     {
         Coordinates coords = new Coordinates(longi, lati, h);
+        // System.out.println("Coords created for " + type);
 
-        if (type.toLowerCase() == "baloon")
+        if (type.equals("Baloon"))
         {
+            // System.out.println("Baloon created");
             return new Baloon(callsign, coords);
         }
-        else if (type.toLowerCase() == "helicopter")
+        else if (type.equals("Helicopter"))
         {
             return new Helicopter(callsign, coords);
         }
-        else if (type.toLowerCase() == "jetplane")
+        else if (type.equals("JetPlane"))
         {
-            return new Helicopter(callsign, coords);
+            return new JetPlane(callsign, coords);
         }
-        return null;
+        else
+            return null;
     }
 }

@@ -4,26 +4,27 @@ import java.util.HashMap;
 
 import src.avaj.simulator.Simulator;
 import src.avaj.simulator.control.*;
+import src.avaj.simulator.weather.WeatherTower;
 
 public class JetPlane extends Aircraft implements Airborn {
 
-    private Tower tower;
+    private WeatherTower weatherTower;
 
     JetPlane(String callsign, Coordinates coords)
     {
         super(callsign, coords);
     }
 
-    public void registerToTower(Tower tower)
+    public void registerToTower(WeatherTower weatherTower)
     {
-        this.tower = tower;
-        this.tower.registerAC(this);
+        this.weatherTower = weatherTower;
+        this.weatherTower.registerAC(this);
         Simulator.output.println("Tower: JetPlane#" + this.callsign + "(" + this.id +"): " + "registered to tower");
     }
 
     public void weatherUpdate()
     {        
-        String weather = tower.weatherMan(this.coords);
+        String weather = weatherTower.weatherMan(this.coords);
         HashMap<String, String> radioLog = new HashMap<String, String>() {{
             put("FOG", "This shouldn't be possible at cruising altitude");
             put("RAIN", "Watch the chop");
@@ -52,7 +53,7 @@ public class JetPlane extends Aircraft implements Airborn {
         if (this.coords.getH() <= 0)
         {
             Simulator.output.println("JetPlane#" + this.callsign + "(" + this.id +"): " + "landing safely.");
-            this.tower.unregisterAC(this);
+            this.weatherTower.unregisterAC(this);
             Simulator.output.println("Tower: JetPlane#" + this.callsign + "(" + this.id +"): " + "deregistered from tower");
         }
     }
