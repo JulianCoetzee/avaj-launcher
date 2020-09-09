@@ -53,6 +53,7 @@ public class Baloon extends Aircraft implements Airborn {
         if (this.coords.getH() <= 0)
         {
             Simulator.output.println("Baloon#" + this.callsign + "(" + this.id +"): " + "landing safely.");
+            Simulator.output.println("Baloon#" + this.callsign + "(" + this.id +"): " + "Final coordinates: " + this.coords.getLongi() + " " + this.coords.getLati() + " 0");
             this.weatherTower.unregisterAC(this);
             Simulator.output.println("Tower: Baloon#" + this.callsign + "(" + this.id +"): " + "deregistered from tower");
         }

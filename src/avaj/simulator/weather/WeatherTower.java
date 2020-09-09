@@ -18,6 +18,11 @@ public class WeatherTower extends Tower {
         while (i < registered.size())
         {
             registered.get(i).weatherUpdate();
+            if (dr == 0)
+            {
+                dr = 1;
+                i--;
+            }
             i++;
         }
     }

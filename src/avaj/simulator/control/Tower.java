@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Tower {
     public List<Airborn> registered = new ArrayList<Airborn>();
+    protected int dr = 1;
 
     public void registerAC(Airborn newAircraft)
     {
@@ -15,5 +16,6 @@ public class Tower {
     public void unregisterAC(Airborn landed)
     {
         registered.remove(landed);
+        dr = 0;
     }
 }

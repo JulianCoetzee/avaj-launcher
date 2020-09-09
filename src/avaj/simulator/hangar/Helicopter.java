@@ -53,8 +53,10 @@ public class Helicopter extends Aircraft implements Airborn {
         if (this.coords.getH() <= 0)
         {
             Simulator.output.println("Helicopter#" + this.callsign + "(" + this.id +"): " + "landing safely.");
+            Simulator.output.println("Helicopter#" + this.callsign + "(" + this.id +"): " + "Final coordinates: " + this.coords.getLongi() + " " + this.coords.getLati() + " 0");
             this.weatherTower.unregisterAC(this);
             Simulator.output.println("Tower: Helicopter#" + this.callsign + "(" + this.id +"): " + "deregistered from tower");
+            
         }
     }
 }
